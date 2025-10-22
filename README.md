@@ -1,61 +1,61 @@
-# Android Notification Listener
+# Android 通知监听器
 
-An Android sample app that captures status bar notifications (e.g., WeChat) via `NotificationListenerService`, displays them in a Compose UI, and logs their metadata for debugging.
+一个Android示例应用，通过`NotificationListenerService`捕获状态栏通知（例如微信），在Compose UI中显示，并记录元数据用于调试。
 
-## Prerequisites
-- macOS 12+ with Android Studio (latest stable) and Android SDK API 34 installed.
-- Java 17 (bundled with Android Studio).
-- Optional physical Android device with USB debugging enabled or an emulator configured through Android Studio.
-- WeChat (or any target app) installed on the device/emulator for testing.
+## 前提条件
+- 已安装macOS 12+、Android Studio（最新稳定版）和Android SDK API 34。
+- Java 17（随Android Studio捆绑）。
+- 可选：已启用USB调试的物理Android设备，或通过Android Studio配置的模拟器。
+- 在设备/模拟器上安装了微信（或任何目标应用）用于测试。
 
-See `plan.md` for a full environment preparation guide, including emulator creation and APK sideloading tips.
+请参阅`plan.md`获取完整的环境准备指南，包括模拟器创建和APK侧载提示。
 
-## Getting Started
-1. **Clone the repository**
+## 开始使用
+1. **克隆仓库**
    ```bash
    git clone https://github.com/nomadicwind/android-notification-listener.git
    cd android-notification-listener
    ```
-2. **Open in Android Studio**
-   - Choose *Open an Existing Project* and select this directory.
-   - Let Gradle sync; install any missing SDK components when prompted.
-3. **Build**
-   - Select a connected device or emulator.
-   - Press **Sync Project with Gradle Files**, then **Run ▶** in Android Studio or execute `./gradlew installDebug` from the terminal.
-4. **Start the App**
-   - From Android Studio use **Run ▶**, or on the device open the newly installed *Notification Listener* app from the launcher.
-   - If you used the command line, launch the app manually after `installDebug` completes.
+2. **在Android Studio中打开**
+   - 选择*打开现有项目*并选择此目录。
+   - 让Gradle同步；根据提示安装任何缺失的SDK组件。
+3. **构建**
+   - 选择已连接的设备或模拟器。
+   - 在Android Studio中按下**同步项目与Gradle文件**，然后**运行▶**，或从终端执行`./gradlew installDebug`。
+4. **启动应用**
+   - 从Android Studio使用**运行▶**，或在设备上从启动器打开新安装的*通知监听器*应用。
+   - 如果使用命令行，请在`installDebug`完成后手动启动应用。
 
-## Grant Notification Access
-1. Launch the app on your device/emulator.
-2. Tap **Open Settings** in the app or navigate to **Settings ▸ Notifications ▸ Notification access**.
-3. Enable access for *Notification Listener*.
-4. Trigger a notification (e.g., send a WeChat message) and verify it appears in the app list and in Logcat.
+## 授予通知访问权限
+1. 在您的设备/模拟器上启动应用。
+2. 点击应用中的**打开设置**，或导航到**设置▸通知▸通知访问**。
+3. 为*通知监听器*启用访问权限。
+4. 触发一个通知（例如，发送一条微信消息）并验证它是否出现在应用列表和Logcat中。
 
-## Project Structure
+## 项目结构
 ```
 app/
  ├── src/main/java/com/example/notificationlistener/
- │    ├── data/NotificationRepository.kt        # In-memory store for captured notifications
+ │    ├── data/NotificationRepository.kt        # 捕获通知的内存存储
  │    ├── listener/AppNotificationListenerService.kt
- │    ├── ui/theme/                             # Compose Material 3 theme setup
- │    └── MainActivity.kt                       # Compose UI and permission flow
- ├── src/main/res/                              # Resources (strings, icons, themes)
- └── build.gradle.kts                           # Module configuration with Compose enabled
+ │    ├── ui/theme/                             # Compose Material 3主题设置
+ │    └── MainActivity.kt                       # Compose UI和权限流程
+ ├── src/main/res/                              # 资源（字符串、图标、主题）
+ └── build.gradle.kts                           # 启用Compose的模块配置
 ```
 
-## Testing & Tooling
-- Run unit tests: `./gradlew test`
-- Run instrumentation tests (requires emulator/device): `./gradlew connectedAndroidTest`
-- Static analysis / lint: `./gradlew lint`
+## 测试与工具
+- 运行单元测试：`./gradlew test`
+- 运行仪器测试（需要模拟器/设备）：`./gradlew connectedAndroidTest`
+- 静态分析/代码检查：`./gradlew lint`
 
-## Next Steps & Enhancements
-- Persist captured notifications (Room, DataStore).
-- Add filters (e.g., WeChat-only toggle) and search.
-- Export or sync notifications to another service.
-- Harden privacy: redact sensitive data, add opt-in for persistence/export.
+## 下一步与增强功能
+- 持久化捕获的通知（Room, DataStore）。
+- 添加过滤器（例如仅微信切换）和搜索功能。
+- 导出或同步通知到其他服务。
+- 加强隐私保护：删除敏感数据，为持久化/导出添加选择加入功能。
 
-## Troubleshooting
-- **Service not receiving notifications:** Revoke and re-enable notification access; ensure the service appears enabled in settings.
-- **WeChat on emulator:** Use a Google Play system image or sideload the official APK via `adb install`.
-- **Gradle sync issues:** Verify you installed matching Android Gradle Plugin and SDK versions (AGP 8.2.2 with Gradle 8.2).
+## 故障排除
+- **服务未接收通知：** 撤销并重新启用通知访问权限；确保服务在设置中显示为已启用。
+- **模拟器上的微信：** 使用Google Play系统镜像或通过`adb install`侧载官方APK。
+- **Gradle同步问题：** 验证您安装了匹配的Android Gradle插件和SDK版本（AGP 8.2.2与Gradle 8.2）。
