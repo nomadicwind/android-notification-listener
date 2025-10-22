@@ -13,7 +13,7 @@ See `plan.md` for a full environment preparation guide, including emulator creat
 ## Getting Started
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/your-org/android-notification-listener.git
+   git clone https://github.com/nomadicwind/android-notification-listener.git
    cd android-notification-listener
    ```
 2. **Open in Android Studio**
