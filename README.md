@@ -6,20 +6,65 @@
 
 `NotificationListenerService`是Android系统提供的一个特殊服务，允许应用监听设备上所有通知的发布和移除事件。这是实现通知监听功能的核心机制。
 
-**工作原理：**
+### 关键接口详解
+
+**1. onListenerConnected()**
+```kotlin
+override fun onListenerConnected()
+```
+- 当服务成功连接到系统通知管理器时调用
+- 表示服务已准备好接收通知事件
+- 通常在此方法中更新UI状态，告知用户服务已激活
+- 在本项目中，我们通过`NotificationRepository.setServiceConnected(true)`更新服务连接状态
+
+**2. onListenerDisconnected()**
+```kotlin
+override fun onListenerDisconnected()
+```
+- 当服务与系统通知管理器断开连接时调用
+- 可能由于系统重启、应用被强制停止或权限被撤销等原因触发
+- 通常在此方法中更新UI状态，告知用户服务已断开
+- 在本项目中，我们通过`NotificationRepository.setServiceConnected(false)`更新服务连接状态
+
+**3. onNotificationPosted(StatusBarNotification sbn)**
+```kotlin
+override fun onNotificationPosted(sbn: StatusBarNotification)
+```
+- 当有新通知发布时调用，参数`sbn`包含完整的通知信息
+- `StatusBarNotification`对象提供以下关键属性：
+  - `key`: 通知的唯一标识符
+  - `packageName`: 发送通知的应用包名
+  - `postTime`: 通知发布时间戳
+  - `notification`: 包含通知详细内容的Notification对象
+- 在本项目中，我们从`notification.extras`提取标题和正文：
+  ```kotlin
+  val title = extras.getCharSequence(Notification.EXTRA_TITLE)?.toString()
+  val text = extras.getCharSequence(Notification.EXTRA_TEXT)?.toString()
+  ```
+
+**4. onNotificationRemoved(StatusBarNotification? sbn)**
+```kotlin
+override fun onNotificationRemoved(sbn: StatusBarNotification?)
+```
+- 当通知被用户清除或自动过期时调用
+- 参数`sbn`可能为null，因此需要进行空值检查
+- 通常用于清理本地存储的对应通知记录
+- 在本项目中，我们使用通知的`key`来移除对应的记录
+
+### 工作原理：
 1. 应用需要声明一个继承自`NotificationListenerService`的服务类
 2. 用户必须在系统设置中明确授予该应用通知访问权限
 3. 一旦授权，系统会在有新通知发布或现有通知被移除时回调服务的方法
 4. 服务可以提取通知的详细信息（如标题、正文、包名、时间戳等）
 5. 这些信息可以被存储、显示或用于其他业务逻辑
 
-**主要优势：**
+### 主要优势：
 - **系统级访问**：能够捕获设备上所有应用的通知（用户授权后）
 - **实时性**：通知事件几乎是实时传递的
 - **丰富信息**：可以获取通知的完整元数据
 - **无root需求**：不需要设备root权限，只需用户授权
 
-**注意事项：**
+### 注意事项：
 - 需要用户手动在系统设置中授予权限
 - 受到Android系统的隐私保护限制
 - 在某些定制ROM或安全软件中可能被限制
