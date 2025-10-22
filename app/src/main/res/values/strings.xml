@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Notification Listener</string>
+    <string name="service_name">Notification Listener Service</string>
+    <string name="notification_access_disabled">Notification access disabled</string>
+    <string name="notification_access_enabled">Notification access enabled</string>
+    <string name="open_settings">Open Settings</string>
+    <string name="clear_notifications">Clear Notifications</string>
+    <string name="no_notifications">No notifications captured yet.</string>
+    <string name="captured_notifications">Captured Notifications</string>
+    <string name="we_chat_package">com.tencent.mm</string>
+    <string name="service_connected">Service connected</string>
+    <string name="service_not_connected">Service not connected</string>
+    <string name="package_label">Package: %1$s</string>
+    <string name="ongoing_notification">Ongoing notification</string>
+</resources>

@@ -1,0 +1,28 @@
+# Gradle files
+.gradle/
+build/
+*/build/
+
+# Local configuration files
+local.properties
+.idea/
+.DS_Store
+
+# Generated files
+captures/
+.externalNativeBuild/
+.cxx/
+
+# Android Studio
+*.iml
+.project
+.classpath
+.settings/
+.navigation/
+
+# OS files
+Thumbs.db
+ehthumbs.db
+
+# Kotlin/Java tooling
+out/
